@@ -5,7 +5,7 @@ function App() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
-  const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+  const API_KEY = '999571933c864a05a5221017242408';
 
   const fetchWeather = async () => {
     if (city === '') return;
@@ -33,6 +33,13 @@ function App() {
     fetchWeather();
   };
 
+
+  const handleClear = () => {
+    setCity('');
+    setWeather(null);
+    setForecast(null);
+  };
+  
   return (
     <div className="App">
       <h1>Weather App</h1>
@@ -44,6 +51,7 @@ function App() {
           onChange={(e) => setCity(e.target.value)}
         />
         <button type="submit">Get Weather</button>
+        <button type="button" onClick={handleClear} className="clear-button">Clear</button> {/* Clear button */}
       </form>
 
       {weather && (

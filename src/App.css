@@ -27,7 +27,9 @@ h1 {
 
 form {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 10px; /* Space between input and buttons */
   margin-bottom: 20px;
 }
 
@@ -35,10 +37,11 @@ input {
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #A6E22E;
-  border-radius: 5px 0 0 5px;
-  width: 70%;
+  border-radius: 25px;
+  width: 100%; /* Full width for better alignment */
   color: #ffffff;
   background-color: #333;
+  margin-bottom: 10px;
 }
 
 button {
@@ -47,13 +50,21 @@ button {
   background-color: #A6E22E;
   color: #1a1a1d;
   border: none;
-  border-radius: 0 5px 5px 0;
   cursor: pointer;
+  border-radius: 25px; /* Make buttons rounder */
   transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #88cb2f;
+}
+
+.clear-button {
+  background-color: #ff6b6b;
+}
+
+.clear-button:hover {
+  background-color: #ff3b3b;
 }
 
 .weather-info {
@@ -116,10 +127,11 @@ p {
   }
 
   input {
-    width: 65%;
+    width: 100%;
   }
 
   button {
     padding: 10px 15px;
+    width: 48%; /* Ensure buttons have equal width and align well on small screens */
   }
 }
