@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import './App.css'
+import './App.css';
 
 function App() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
   const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-
 
   const fetchWeather = async () => {
     if (city === '') return;
     try {
       const response = await fetch(
-        `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`
+        `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=3`
       );
       const data = await response.json();
       if (response.ok) {
-        setWeather(data);
+        setWeather(data.current);
+        setForecast(data.forecast.forecastday);
       } else {
         alert(data.error.message || 'City not found');
         setWeather(null);
+        setForecast(null);
       }
     } catch (error) {
       console.error('Error fetching weather data:', error);
@@ -45,10 +47,25 @@ function App() {
       </form>
 
       {weather && (
-        <div>
-          <h2>{weather.location.name}</h2>
-          <p>Temperature: {weather.current.temp_c}°C</p>
-          <p>Weather: {weather.current.condition.text}</p>
+        <div className="weather-info">
+          <h2>{city}</h2>
+          <p>Temperature: {weather.temp_c}°C</p>
+          <p>Weather: {weather.condition.text}</p>
+          <p>Humidity: {weather.humidity}%</p> {/* Display humidity */}
+        </div>
+      )}
+
+      {forecast && (
+        <div className="forecast">
+          <h3>3-Day Forecast</h3>
+          {forecast.map((day) => (
+            <div key={day.date} className="forecast-day">
+              <h4>{day.date}</h4>
+              <p>{day.day.condition.text}</p>
+              <p>Min: {day.day.mintemp_c}°C | Max: {day.day.maxtemp_c}°C</p>
+              <p>Humidity: {day.day.avghumidity}%</p> {/* Display average humidity for the day */}
+            </div>
+          ))}
         </div>
       )}
     </div>
